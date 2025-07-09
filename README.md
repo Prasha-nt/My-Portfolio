@@ -1,8 +1,8 @@
-# 🚀 John Doe - Portfolio Website
+# 🚀 Prashant Gupta 
 
 A modern, responsive portfolio website built with React, TypeScript, and Tailwind CSS. Features a beautiful glassmorphism design, smooth animations, and dark mode support.
 
-![Portfolio Preview](https://via.placeholder.com/800x400/1a1a1a/ffffff?text=Portfolio+Preview)
+[Portfolio Preview](https://my-portfolio-eight-fawn-90.vercel.app/)
 
 ## ✨ Features
 
