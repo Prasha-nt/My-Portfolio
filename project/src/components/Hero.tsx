@@ -135,7 +135,7 @@ const Hero: React.FC = () => {
                 {/* Profile image placeholder */}
                 <div className="relative w-full h-full rounded-full overflow-hidden bg-gradient-to-br from-blue-500/20 to-purple-500/20 backdrop-blur-sm border border-white/20 dark:border-white/10 flex items-center justify-center">
                   <img 
-                    src="/src/assets/prashant.jpg" 
+                    src="/prashant.jpg" 
                     alt="Profile" 
                     className="w-full h-full object-cover rounded-full"
                   />

@@ -98,7 +98,7 @@ const About: React.FC = () => {
                   <div className="relative w-full h-full bg-white/10 dark:bg-white/5 backdrop-blur-xl rounded-2xl border border-white/20 dark:border-white/10 p-6 sm:p-8 group-hover:bg-white/15 dark:group-hover:bg-white/10 transition-all duration-500">
                     <div className="w-full h-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-xl flex items-center justify-center relative overflow-hidden">
                       <img 
-                        src="/src/assets/prashant.jpg"
+                        src="/prashant.jpg"
                         alt="Profile"
                         className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-96 lg:h-96 object-cover rounded-full group-hover:scale-110 transition-transform duration-500"
                       />
