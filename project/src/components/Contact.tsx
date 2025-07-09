@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, Send, CheckCircle, Linkedin } from 'lucide-react'; // ✅ Replaced MapPin with Linkedin
+import { Mail, Phone, Send, CheckCircle, Linkedin } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = React.useState({
@@ -31,10 +32,9 @@ const Contact: React.FC = () => {
       info: (
         <a
           href="https://www.linkedin.com/in/prashant-gupta-cell/"
-          target="https://www.linkedin.com/in/prashant-gupta-cell/"
+          target="_blank"
           rel="noopener noreferrer"
           className="text-sm text-gray-600 dark:text-blue-400 hover:underline"
-          
         >
           Prashant Gupta
         </a>
@@ -43,26 +43,12 @@ const Contact: React.FC = () => {
     },
   ];
 
-  // ... rest of your component remains unchanged ...
-
-
-
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
-
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email';
-    }
-
-    if (!formData.message.trim()) {
-      newErrors.message = 'Message is required';
-    }
+    if (!formData.name.trim()) newErrors.name = 'Name is required';
+    if (!formData.email.trim()) newErrors.email = 'Email is required';
+    else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Please enter a valid email';
+    if (!formData.message.trim()) newErrors.message = 'Message is required';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -70,27 +56,35 @@ const Contact: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!validateForm()) return;
 
     setIsSubmitting(true);
 
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setShowSuccess(true);
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
+        },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      );
       setFormData({ name: '', email: '', message: '' });
-      
-      // Hide success message after 3 seconds
+      setShowSuccess(true);
       setTimeout(() => setShowSuccess(false), 3000);
-    }, 1000);
+    } catch (error) {
+      console.error('EmailJS Error:', error);
+      alert('Failed to send message. Try again later.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
@@ -100,9 +94,7 @@ const Contact: React.FC = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
+      transition: { staggerChildren: 0.2 },
     },
   };
 
@@ -111,9 +103,7 @@ const Contact: React.FC = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        duration: 0.6,
-      },
+      transition: { duration: 0.6 },
     },
   };
 
@@ -138,14 +128,10 @@ const Contact: React.FC = () => {
 
           <div className="grid lg:grid-cols-2 gap-12">
             <motion.div variants={itemVariants}>
-              <h3 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">
-                Let's Work Together
-              </h3>
+              <h3 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Let's Work Together</h3>
               <p className="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-                I'm always excited to take on new challenges and collaborate on innovative projects. 
-                Whether you need a website, mobile app, or just want to discuss an idea, I'm here to help.
+                I'm always excited to take on new challenges and collaborate on innovative projects.
               </p>
-
               <div className="space-y-6">
                 {contactInfo.map((contact, index) => (
                   <motion.div
@@ -153,10 +139,7 @@ const Contact: React.FC = () => {
                     initial={{ opacity: 0, x: -30 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    // className="flex items-center space-x-4 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg hover:shadow-md transition-shadow duration-300"
-                    // className="flex items-center space-x-4 p-4 bg-white/10 dark:bg-white/5 backdrop-blur-lg rounded-lg hover:shadow-md transition-all duration-300 border border-white/20 dark:border-white/10 hover:bg-white/15 dark:hover:bg-white/10"
                     className="flex items-center space-x-4 p-4 bg-white/10 dark:bg-white/5 backdrop-blur-lg rounded-lg hover:shadow-md transition-all duration-300 border border-white/20 dark:border-white/10 hover:bg-white/15 dark:hover:bg-white/10"
-
                   >
                     <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${contact.color} flex items-center justify-center`}>
                       <contact.icon className="w-6 h-6 text-white" />
@@ -172,65 +155,47 @@ const Contact: React.FC = () => {
 
             <motion.div variants={itemVariants}>
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 ${
-                      errors.name 
-                        ? 'border-red-500 bg-red-50 dark:bg-red-900/20' 
-                        : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700'
-                    } text-gray-900 dark:text-white`}
-                    placeholder="Your name"
-                  />
-                  {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
-                </div>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Your name"
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
+                    errors.name
+                      ? 'border-red-500 bg-red-50 dark:bg-red-900/20'
+                      : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700'
+                  } text-gray-900 dark:text-white`}
+                />
+                {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
 
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 ${
-                      errors.email 
-                        ? 'border-red-500 bg-red-50 dark:bg-red-900/20' 
-                        : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700'
-                    } text-gray-900 dark:text-white`}
-                    placeholder="your.email@example.com"
-                  />
-                  {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
-                </div>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="your.email@example.com"
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
+                    errors.email
+                      ? 'border-red-500 bg-red-50 dark:bg-red-900/20'
+                      : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700'
+                  } text-gray-900 dark:text-white`}
+                />
+                {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
 
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    rows={5}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 resize-none ${
-                      errors.message 
-                        ? 'border-red-500 bg-red-50 dark:bg-red-900/20' 
-                        : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700'
-                    } text-gray-900 dark:text-white`}
-                    placeholder="Tell me about your project..."
-                  />
-                  {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
-                </div>
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  rows={5}
+                  placeholder="Tell me about your project..."
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 resize-none ${
+                    errors.message
+                      ? 'border-red-500 bg-red-50 dark:bg-red-900/20'
+                      : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700'
+                  } text-gray-900 dark:text-white`}
+                />
+                {errors.message && <p className="text-red-500 text-sm">{errors.message}</p>}
 
                 <motion.button
                   type="submit"
@@ -255,7 +220,6 @@ const Contact: React.FC = () => {
             </motion.div>
           </div>
 
-          {/* Success Message */}
           {showSuccess && (
             <motion.div
               initial={{ opacity: 0, y: 50 }}

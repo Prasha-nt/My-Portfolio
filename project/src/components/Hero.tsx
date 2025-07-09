@@ -155,14 +155,16 @@ const Hero: React.FC = () => {
             >
               Explore My Work
             </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => window.open('https://drive.google.com/file/d/1zYJvoxYNcFUwGGP2FazjyxhXjK9Ne6-s/view?usp=sharing', '_blank')}
-              className="px-8 py-4 bg-white/10 dark:bg-white/5 backdrop-blur-lg border border-white/20 dark:border-white/10 text-gray-700 dark:text-gray-300 rounded-full font-semibold text-lg hover:bg-white/20 dark:hover:bg-white/10 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300"
-            >
-              Download Resume
-            </motion.button>
+            <motion.a
+  href="/Prashant_Gupta_Resume.pdf"
+  download="Prashant_Gupta_Resume.pdf"
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+  className="px-8 py-4 bg-white/10 dark:bg-white/5 backdrop-blur-lg border border-white/20 dark:border-white/10 text-gray-700 dark:text-gray-300 rounded-full font-semibold text-lg hover:bg-white/20 dark:hover:bg-white/10 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300"
+>
+  Download Resume
+</motion.a>
+
           </motion.div>
         </motion.div>
 

@@ -6,7 +6,7 @@ const FloatingResumeButton: React.FC = () => {
   const handleDownload = () => {
     // In a real application, you would link to your actual resume file
     const link = document.createElement('a');
-    link.href = '/src/assets/Prashant off campus 8 July.pdf'; // Replace with your actual resume file path
+    link.href = '/Prashant_Gupta_Resume.pdf'; 
     link.download = 'Prashant_Gupta_Resume.pdf';
     link.click();
   };
