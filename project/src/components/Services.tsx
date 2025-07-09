@@ -13,7 +13,7 @@ const Services: React.FC = () => {
       color: 'from-blue-500 to-cyan-500',
     },
     {
-      id: 2,
+      id:3 ,
       icon: Palette,
       title: 'UI/UX Design',
       description: 'Creating beautiful, intuitive user interfaces that provide exceptional user experiences and drive engagement.',
@@ -21,7 +21,7 @@ const Services: React.FC = () => {
       color: 'from-purple-500 to-pink-500',
     },
     {
-      id: 3,
+      id: 2,
       icon: MonitorSmartphoneIcon,
       title: 'Software Development',
       description: 'Designing and developing scalable software solutions that solve real-world problems with clean and maintainable code.',
