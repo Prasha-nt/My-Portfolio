@@ -4,6 +4,7 @@ import disaster from './disaster.png';
 import seekhlo from './seekhlo.png';
 import form from './form.png';
 import user from './user.jpg';
+import erp from './erp.png';
 // Add more images as needed
 
 const images = {
@@ -13,6 +14,7 @@ const images = {
   seekhlo,
   form,
   user,
+  erp,
 };
 
 export default images;
