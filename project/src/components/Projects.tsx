@@ -36,8 +36,18 @@ const Projects: React.FC = () => {
       codeUrl: 'https://github.com/Prasha-nt/Disaster-Response',
       featured: false,
     },
-    {
+     {
       id: 4,
+      title: 'Live Polling',
+      description: 'This application allows teachers to create polls on-the-fly and lets students vote and see live results instantly.',
+      image: images.live,
+      tech: ['React JS', 'Socket.IO','Firebase','Express JS'],
+      liveUrl: 'https://live-polling-ten.vercel.app/',
+      codeUrl: 'https://github.com/Prasha-nt/Live-polling',
+      featured: false,
+    },
+    {
+      id: 5,
       title: 'SeekhLo',
       description: 'Frontend project aligned with UN Sustainable Development Goals using custom Bootstrap and JS.',
       image: images.seekhlo,
@@ -47,7 +57,7 @@ const Projects: React.FC = () => {
       featured: false,
     },
     {
-      id: 5,
+      id: 6,
       title: 'Form Builder',
       description: 'A sleek, drag-and-drop Form Builder built with React Remix and Tailwind CSS.',
       image: images.form,
@@ -57,7 +67,7 @@ const Projects: React.FC = () => {
       featured: false,
     },
     {
-      id: 6,
+      id: 7,
       title: 'User Access Management',
       description: 'Full-stack User Access Management System with 3 user roles (Employee, Manager, Admin)',
       image: images.user,
@@ -67,7 +77,7 @@ const Projects: React.FC = () => {
       featured: false,
     },
     {
-      id: 7,
+      id: 8,
       title: 'Student ERP App',
       description: 'Mobile-first Student ERP Frontend built using Next.js for managing academics, attendance, fees, and more.',
       image: images.erp,
@@ -75,7 +85,7 @@ const Projects: React.FC = () => {
       liveUrl: 'https://student-erp-nine.vercel.app/',
       codeUrl: 'https://github.com/Prasha-nt/Student-ERP',
       featured: false,
-    },
+    },   
   ];
 
   const containerVariants = {
